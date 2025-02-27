@@ -5,7 +5,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   const menuItems = [
     { id: 'home', label: 'Home', icon: <Home size={20} /> },
     { id: 'inbox', label: 'Inbox', icon: <Inbox size={20} /> },
-    { id: 'connection', label: 'Connection', icon: <Users size={20} /> },
+    { id: 'connections', label: 'Connection', icon: <Users size={20} /> },
     { id: 'calendar', label: 'Event Calendar', icon: <Calendar size={20} /> },
     { id: 'pose', label: 'Pose Correction', icon: <Activity size={20} /> },
     { id: 'challenges', label: 'Challenges', icon: <Award size={20} /> },
