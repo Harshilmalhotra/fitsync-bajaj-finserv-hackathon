@@ -9,6 +9,7 @@ import EventCalendar from '../pages/EventCalendar';
 import Challenges from './Challenges';
 import Analytics from './Analytics';
 import WorkoutLibrary from './WorkoutLibrary';
+import Inbox from './Inbox';
 
 const FitnessDashboard = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -17,20 +18,21 @@ const FitnessDashboard = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto bg-black">
         <div className="p-6">
           <TopNav />
           <div className="mt-6">
             {activeTab === 'home' && <HomeContent />}
             {activeTab === 'pose' && <PoseCorrection />}
             {activeTab === 'calendar' && <EventCalendar />}
+            {activeTab === 'inbox' && <Inbox />}
             {activeTab === 'challenges' && <Challenges />}
             {activeTab === 'analytics' && <Analytics />}
             {activeTab === 'workout' && <WorkoutLibrary />}
           </div>
         </div>
       </div>
-      <ProfileSidebar />
+      {/* <ProfileSidebar /> */}
     </div>
   );
 };
