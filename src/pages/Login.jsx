@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase";
+import { supabase } from "./supabase";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -12,11 +11,22 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      // Supabase sign-in
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message);
+      } else {
+        // Navigate to dashboard on successful login
+        navigate("/dashboard");
+      }
     } catch (err) {
-      setError(err.message);
+      setError("An unexpected error occurred. Please try again.");
     }
   };
 

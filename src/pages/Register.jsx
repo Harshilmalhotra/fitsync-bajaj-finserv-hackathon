@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase";
+import { supabase } from "./supabase"; // Import your Supabase client
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -22,12 +21,20 @@ const Register = () => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setSuccess("Account created successfully!");
-      setTimeout(() => navigate("/login"), 2000);
+      const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
+
+      if (error) {
+        setError(error.message);
+      } else if (data) {
+        setSuccess("Account created successfully!");
+        setTimeout(() => navigate("/login"), 2000);
+      }
     } catch (err) {
       console.error("Signup failed:", err);
-      setError(err.message || "An error occurred during signup.");
+      setError("An error occurred during signup.");
     }
   };
 
