@@ -32,8 +32,8 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 flex flex-col items-center space-x-2">
+    <div className="flex justify-center items-center min-h-screen bg-black">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 flex flex-col items-center bg-yellow-400">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
         {error && <div className="bg-red-100 text-red-600 p-2 rounded mb-4">{error}</div>}
         {success && <div className="bg-green-100 text-green-600 p-2 rounded mb-4">{success}</div>}
@@ -79,7 +79,7 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-20 bg-blue-500 p-3 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
+            className="w-25 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
           >
             Sign Up
           </button>
