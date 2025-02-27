@@ -5,8 +5,9 @@ import './App.css'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import { Routes,Route } from 'react-router-dom'
-import Dashboard from './components/Dashboard'
+// import Dashboard from './components/Dashboard'
 import ProtectedRoute from './pages/ProtectedRoute'
+import FitnessDashboard from './pages/FitnessDashboard'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,7 +18,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
-        <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
+        <Route path='/dashboard' element={<FitnessDashboard/>}/>
       </Routes>
 
     </>

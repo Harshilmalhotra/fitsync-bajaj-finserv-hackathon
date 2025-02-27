@@ -23,6 +23,7 @@ const Login = () => {
         setError(error.message);
       } else {
         // Navigate to dashboard on successful login
+        console.log("Login success")
         navigate("/dashboard");
       }
     } catch (err) {
