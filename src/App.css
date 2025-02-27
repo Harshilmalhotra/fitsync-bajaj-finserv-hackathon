@@ -4,3 +4,15 @@
   margin: 0;
   padding: 0;
 }
+@keyframes progressLoader {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -314; 
+  }
+}
+
+.group:hover circle {
+  animation: progressLoader 0.5s ease-in-out infinite;
+}

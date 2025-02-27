@@ -2,13 +2,14 @@ import React from 'react';
 import StatCard from './StatCard';
 import ActivityItem from './ActivityItem';
 import UpcomingItem from './UpcomingItem';
+import '../App.css'
 
 const HomeContent = () => {
   return (
     <div className="space-y-6 bg-black text-gray-200">
       <h2 className="text-2xl font-bold">Your Dashboard</h2>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6 bg-yellow-400 rounded-3xl">
         <StatCard
           title="Daily Steps"
           value="7,432"

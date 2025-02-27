@@ -86,7 +86,6 @@ export default function Connection() {
         }
     };
 
-    // Fetch user connections
     const fetchConnections = async () => {
         if (!userId) return;
 
