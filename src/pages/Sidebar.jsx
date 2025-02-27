@@ -11,10 +11,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: 'challenges', label: 'Challenges', icon: <Award size={20} /> },
     { id: 'analytics', label: 'Analytics', icon: <BarChart2 size={20} /> },
     { id: 'workout', label: 'Workout Library', icon: <Activity size={20} /> },
+    { id: 'profile', label: 'Profile', icon: <Users size={20} /> },
   ];
 
   return (
-    <div className="w-64 bg-yellow-400 flex flex-col ">
+    <div className="w-64 bg-black flex flex-col text-gray-200">
       <div className="text-xl font-bold mb-8 p-6">Dashboard!</div>
       <nav>
         <ul>
@@ -23,14 +24,14 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
               <button
                 onClick={() => setActiveTab(item.id)}
                 className={`flex items-center w-full p-2 rounded-md ${activeTab === item.id
-                    ? 'bg-black text-white'
-                    : 'hover:bg-green-100'
+                    ? 'bg-gray-800 text-cyan-400'
+                    : 'hover:bg-gray-800 hover:text-cyan-400'
                   }`}
               >
                 <span className="mr-3">{item.icon}</span>
                 <span>{item.label}</span>
                 {item.id === 'inbox' && (
-                  <span className="ml-auto bg-green-600 text-white text-xs px-2 py-1 rounded-full">
+                  <span className="ml-auto bg-lime-500 text-gray-200 text-xs px-2 py-1 rounded-full">
                     New
                   </span>
                 )}
@@ -39,6 +40,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           ))}
         </ul>
       </nav>
+      <div className="px-4 py-2 bg-cyan-500 text-white font-bold rounded-lg hover:scale-105 transition-transform mt-4">
+        <button onClick={() => setActiveTab('special')}>Special Button</button>
+      </div>
     </div>
   );
 };
