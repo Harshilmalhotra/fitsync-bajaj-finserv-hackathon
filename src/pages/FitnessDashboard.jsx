@@ -10,6 +10,7 @@ import Challenges from './Challenges';
 import Analytics from './Analytics';
 import WorkoutLibrary from './WorkoutLibrary';
 import Inbox from './Inbox';
+import Community from './Community';
 
 import Profile from './Profile';
 import Leaderboard from './Leaderboard';
@@ -38,6 +39,7 @@ const FitnessDashboard = () => {
             {activeTab === 'workout' && <WorkoutLibrary />}
             {activeTab === 'profile' && <Profile />}
             {activeTab === 'leaderboard' && <Leaderboard />}
+            {activeTab === 'community' && <Community />}
           </div>
         </div>
       </div>

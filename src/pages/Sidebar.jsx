@@ -13,6 +13,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: 'workout', label: 'Workout Library', icon: <Activity size={20} /> },
     { id: 'profile', label: 'Profile', icon: <Users size={20} /> },
     { id: 'leaderboard', label: 'Leaderboard', icon: <Award size={20} /> },
+    { id: 'community', label: 'Community', icon: <Users size={20} /> },
   ];
 
   return (
