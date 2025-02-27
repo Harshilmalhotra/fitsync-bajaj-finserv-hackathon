@@ -12,6 +12,7 @@ import WorkoutLibrary from './WorkoutLibrary';
 import Inbox from './Inbox';
 
 import Profile from './Profile';
+import Leaderboard from './Leaderboard';
 
 import Connection from './Connection';
 
@@ -36,6 +37,7 @@ const FitnessDashboard = () => {
             {activeTab === 'analytics' && <Analytics />}
             {activeTab === 'workout' && <WorkoutLibrary />}
             {activeTab === 'profile' && <Profile />}
+            {activeTab === 'leaderboard' && <Leaderboard />}
           </div>
         </div>
       </div>
