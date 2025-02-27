@@ -3,9 +3,12 @@ import { supabase } from "./supabase"; // Import your Supabase client
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [name, setName] = useState(""); // New state for name
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [height, setHeight] = useState("");
+  const [gender, setGender] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -21,17 +24,35 @@ const Register = () => {
     }
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // Sign up the user
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: email,
         password: password,
       });
 
-      if (error) {
-        setError(error.message);
-      } else if (data) {
-        setSuccess("Account created successfully!");
-        setTimeout(() => navigate("/login"), 2000);
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
       }
+
+      // Insert additional user details into the table
+      const { data: userData, error: insertError } = await supabase
+        .from("registered_trackies")
+        .insert({
+          name: name, // Add name to the table
+          email: email,
+          password: password,
+          height: parseInt(height),
+          gender: gender,
+        });
+
+      if (insertError) {
+        setError(insertError.message);
+        return;
+      }
+
+      setSuccess("Account created successfully!");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       console.error("Signup failed:", err);
       setError("An error occurred during signup.");
@@ -45,6 +66,19 @@ const Register = () => {
         {error && <div className="bg-red-100 text-red-600 p-2 rounded mb-4">{error}</div>}
         {success && <div className="bg-green-100 text-green-600 p-2 rounded mb-4">{success}</div>}
         <form onSubmit={handleSignup}>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
               Email
@@ -71,7 +105,7 @@ const Register = () => {
               required
             />
           </div>
-          <div className="mb-6">
+          {/* <div className="mb-4">
             <label htmlFor="confirmPassword" className="block text-gray-700 font-medium mb-2">
               Confirm Password
             </label>
@@ -83,6 +117,36 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
+          </div> */}
+          <div className="mb-4">
+            <label htmlFor="height" className="block text-gray-700 font-medium mb-2">
+              Height (cm)
+            </label>
+            <input
+              type="number"
+              id="height"
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="gender" className="block text-gray-700 font-medium mb-2">
+              Gender
+            </label>
+            <select
+              id="gender"
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           <button
             type="submit"

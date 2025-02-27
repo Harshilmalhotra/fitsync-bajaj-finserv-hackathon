@@ -5,8 +5,7 @@ import './App.css'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import { Routes,Route } from 'react-router-dom'
-// import Dashboard from './components/Dashboard'
-import ProtectedRoute from './pages/ProtectedRoute'
+// import ProtectedRoute from './pages/ProtectedRoute'
 import FitnessDashboard from './pages/FitnessDashboard'
 
 function App() {

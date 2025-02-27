@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { supabase } from "./supabase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -11,29 +12,17 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-
     try {
-      // Supabase sign-in
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setError(error.message);
-      } else {
-        // Navigate to dashboard on successful login
-        console.log("Login success")
-        navigate("/dashboard");
-      }
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/dashboard");
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
+      setError(err.message);
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black">
-      <div className="w-full max-w-md rounded-lg shadow-md p-6 flex flex-col items-center bg-yellow-400">
+      <div className="w-full max-w-md rounded-lg shadow-md p-6 flex flex-col items-center bg-yellow-400 ">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         {error && <div className="bg-red-100 text-red-600 p-2 rounded mb-4">{error}</div>}
         <form onSubmit={handleLogin}>

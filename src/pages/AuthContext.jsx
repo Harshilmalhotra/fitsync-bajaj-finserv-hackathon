@@ -1,30 +1,40 @@
-// AuthContext.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from './firebase'; // Update with your Firebase config
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { supabase } from "./supabase";
 
+// Create the AuthContext
 const AuthContext = createContext();
 
+// AuthProvider Component
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    // Check for the existing session
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
       setLoading(false);
+    };
+
+    // Subscribe to auth state changes
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
     });
 
-    return () => unsubscribe();
+    checkSession();
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, loading }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+// Custom Hook to Use Auth
+export const useAuth = () => useContext(AuthContext);

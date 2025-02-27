@@ -1,15 +1,12 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { Navigate } from "react-router-dom";
+import { supabase } from "./supabase";
 
 const ProtectedRoute = ({ children }) => {
-  const { currentUser, loading } = useAuth();
-
-  if (loading) {
-    return <div>Loading...</div>; // Or a loading spinner
+  const session = supabase.auth.getSession();
+  if (!session.data?.session) {
+    return <Navigate to="/login" />;
   }
-
-  return currentUser ? children : <Navigate to="/login" />;
+  return children;
 };
 
 export default ProtectedRoute;

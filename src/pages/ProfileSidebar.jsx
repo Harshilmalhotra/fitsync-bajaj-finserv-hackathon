@@ -1,18 +1,35 @@
-import React from 'react';
-import { signOut } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { supabase } from './supabase'; // Import your Supabase client
 import { useNavigate } from 'react-router-dom';
 import UserStats from './UserStats';
 
 const ProfileSidebar = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   // Fetch the logged-in user's details
+  //   const fetchUser = async () => {
+  //     const { data: session } = await supabase.auth.getSession();
+  //     if (session?.user) {
+  //       setUser(session.user);
+  //     } else {
+  //       // If no session, redirect to login
+  //       navigate('/login');
+  //     }
+  //   };
+  //   fetchUser();
+  // }, [navigate]);
+
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      navigate('/login');
+      await supabase.auth.signOut();
+      navigate('/login'); // Redirect to login after logout
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Error during logout:", error.message);
     }
   };
+
   return (
     <div className="w-64 bg-gray-200 p-6">
       <div className="text-center flex flex-col">
@@ -26,9 +43,12 @@ const ProfileSidebar = () => {
             />
           </div>
         </div>
-        <h3 className="font-medium">Wilfred Joseph</h3>
+        {/* Display the user's email or name */}
+        <h3 className="font-medium">{user?.email || 'User'}</h3>
         <button className="text-blue-500 text-sm mt-1">Edit Profile</button>
-        <button onClick={handleLogout} className="text-blue-500 text-sm cursor-pointer">Logout</button>
+        <button onClick={handleLogout} className="text-blue-500 text-sm cursor-pointer">
+          Logout
+        </button>
 
         <div className="mt-6">
           <UserStats />
