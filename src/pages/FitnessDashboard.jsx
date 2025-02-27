@@ -10,7 +10,11 @@ import Challenges from './Challenges';
 import Analytics from './Analytics';
 import WorkoutLibrary from './WorkoutLibrary';
 import Inbox from './Inbox';
+
 import Profile from './Profile';
+
+import Connection from './Connection';
+
 
 const FitnessDashboard = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -27,6 +31,7 @@ const FitnessDashboard = () => {
             {activeTab === 'pose' && <PoseCorrection />}
             {activeTab === 'calendar' && <EventCalendar />}
             {activeTab === 'inbox' && <Inbox />}
+            {activeTab === 'connections' && <Connection />}
             {activeTab === 'challenges' && <Challenges />}
             {activeTab === 'analytics' && <Analytics />}
             {activeTab === 'workout' && <WorkoutLibrary />}
