@@ -1,25 +1,45 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { supabase } from "./supabase";
-
-// Create the AuthContext
-const AuthContext = createContext();
-
-// AuthProvider Component
-export const AuthProvider = ({ children }) => {
+import { createContext, useContext, useState } from "react";
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // Check for the existing session
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user || null);
+
+      if (session?.user) {
+        // Fetch additional user data from registered_trackies
+        const { data, error } = await supabase
+          .from("registered_trackies")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .single();
+
+        if (!error) {
+          setUserData(data);
+        }
+      }
+
       setLoading(false);
     };
 
-    // Subscribe to auth state changes
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+    // Listen to auth state changes
+    const { data: subscription } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setUser(session?.user || null);
+
+      if (session?.user) {
+        const { data, error } = await supabase
+          .from("registered_trackies")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .single();
+
+        if (!error) {
+          setUserData(data);
+        }
+      }
     });
 
     checkSession();
@@ -30,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, userData }}>
       {children}
     </AuthContext.Provider>
   );
