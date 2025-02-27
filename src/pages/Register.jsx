@@ -46,11 +46,10 @@ const Register = () => {
         return;
       }
 
-      // Insert additional user details into the table
       const { error: insertError } = await supabase
         .from("registered_trackies")
         .insert({
-          user_id: user.id, // Store Supabase user ID
+          user_id: user.id,
           name: name,
           password: password,
           email: email,
