@@ -6,6 +6,8 @@ import { auth } from '../pages/firebase';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
+import { useAuth } from "../pages/AuthContext";
+import supabase from '../pages/supabase'
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
@@ -116,12 +118,13 @@ const ProfileSidebar = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      navigate('/login');
+      await supabase.auth.signOut(); // Sign out the user from Supabase
+      navigate('/login'); // Redirect to login page after logout
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Error during logout:", error.message);
     }
   };
+  
   return (
     <div className="w-64 bg-gray-200 p-6">
       <div className="text-center flex flex-col">

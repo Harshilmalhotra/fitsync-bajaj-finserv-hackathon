@@ -1,7 +1,5 @@
-// AuthContext.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from './firebase'; // Update with your Firebase config
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { supabase } from "./supabase"; // Supabase client
 
 const AuthContext = createContext();
 
@@ -10,12 +8,23 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setCurrentUser(session?.user || null);
+      setLoading(false);
+    };
+
+    getSession();
+
+    // Listen for auth state changes
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user || null);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   return (
