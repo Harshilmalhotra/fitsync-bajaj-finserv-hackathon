@@ -135,7 +135,7 @@ const ProfileSidebar = () => {
             />
           </div>
         </div>
-        <h3 className="font-medium">Wilfred Joseph</h3>
+        <h3 className="font-medium">Harshil Malhotra</h3>
         <button className="text-blue-500 text-sm mt-1">Edit Profile</button>
         <button onClick={handleLogout} className="text-blue-500 text-sm cursor-pointer">Logout</button>
 
