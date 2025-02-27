@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WorkoutCard = ({ title, target, duration, difficulty }) => {
+const WorkoutCard = ({ image, title, target, duration, difficulty }) => {
   const difficultyColor =
     difficulty === 'Advanced' ? 'bg-red-100 text-red-600' :
       difficulty === 'Intermediate' ? 'bg-yellow-100 text-yellow-600' :
@@ -8,9 +8,10 @@ const WorkoutCard = ({ title, target, duration, difficulty }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-      <div className="h-40 bg-gray-100 flex items-center justify-center">
-        <p className="text-gray-500">Exercise image</p>
+      <div className="h-52 bg-gray-100 flex items-center justify-center">
+        <img src={image} alt="" className="h-full w-auto object-cover" />
       </div>
+
       <div className="p-4">
         <h4 className="font-semibold mb-1">{title}</h4>
         <p className="text-gray-600 text-sm mb-3">Targets: {target}</p>

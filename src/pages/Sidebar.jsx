@@ -42,9 +42,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           ))}
         </ul>
       </nav>
-      <div className="px-4 py-2 bg-accent text-white font-bold rounded-lg hover:scale-105 transition-transform mt-4">
+      {/* <div className="px-4 py-2 bg-accent text-white font-bold rounded-lg hover:scale-105 transition-transform mt-4">
         <button onClick={() => setActiveTab('special')}>Special Button</button>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,62 +1,105 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import { Calendar, Typography, Card, List, Modal, Badge } from "antd";
+import { ScheduleOutlined } from "@ant-design/icons";
+import "antd/dist/reset.css";
 
-const EventCalendar = () => {
-  const [events, setEvents] = useState([]); // State to hold events
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+const { Title, Text } = Typography;
 
-  const API_KEY = "AIzaSyDLZSHycsS8kZPiXHFI34BKGDpXjDSGR5U"; // Replace with your API key
-  const CALENDAR_ID = "primary"; // Replace with your calendar ID (e.g., primary or specific calendar ID)
+const FitnessCalendar = () => {
+  // Pre-defined fitness events
+  const fitnessEvents = [
+    { date: "2025-02-28", event: "Morning Yoga Session (7:00 AM)" },
+    { date: "2025-03-01", event: "10,000 Steps Challenge" },
+    { date: "2025-03-01", event: "Evening Zumba Dance (6:00 PM)" },
+    { date: "2025-03-02", event: "Upper Body Strength Workout" },
+    { date: "2025-03-03", event: "Cardio Blast (20 minutes)" },
+    { date: "2025-03-04", event: "Rest Day - Stretch and Meditate" },
+    { date: "2025-03-05", event: "Leg Day Workout" },
+    { date: "2025-03-06", event: "Full Body HIIT Session" },
+  ];
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch events");
-        }
-        const data = await response.json();
-        setEvents(data.items || []);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // State for selected date
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-    fetchEvents();
-  }, []);
+  // Handle date selection
+  const onDateSelect = (date) => {
+    const formattedDate = date.format("YYYY-MM-DD");
+    setSelectedDate(formattedDate);
+    setIsModalVisible(true);
+  };
+
+  // Get events for the selected date
+  const eventsForSelectedDate = fitnessEvents.filter(
+    (event) => event.date === selectedDate
+  );
+
+  // Render custom date cells
+  const dateCellRender = (date) => {
+    const formattedDate = date.format("YYYY-MM-DD");
+    const matchingEvents = fitnessEvents.filter(
+      (event) => event.date === formattedDate
+    );
+
+    if (matchingEvents.length > 0) {
+      return (
+        <div
+          style={{
+            backgroundColor: "#fffbe6",
+            borderRadius: "8px",
+            padding: "5px",
+            border: "1px solid #faad14",
+          }}
+        >
+          <Text strong style={{ color: "#faad14", fontSize: "12px" }}>
+            <ScheduleOutlined style={{ marginRight: "5px" }} />
+            {matchingEvents.length} Event{matchingEvents.length > 1 ? "s" : ""}
+          </Text>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-4 bg-white shadow-lg rounded-lg">
-      <h2 className="text-xl font-bold text-center mb-4">Google Calendar Events</h2>
-      {loading && <p className="text-gray-500 text-center">Loading events...</p>}
-      {error && <p className="text-red-500 text-center">Error: {error}</p>}
-      {!loading && !error && events.length === 0 && (
-        <p className="text-gray-500 text-center">No upcoming events found.</p>
-      )}
-      <ul className="space-y-4">
-        {events.map((event) => (
-          <li
-            key={event.id}
-            className="p-3 border border-gray-300 rounded-lg hover:shadow-md transition duration-150"
-          >
-            <h3 className="text-lg font-semibold text-blue-600">{event.summary}</h3>
-            <p className="text-sm text-gray-600">
-              Start: {event.start?.dateTime || event.start?.date}
-            </p>
-            <p className="text-sm text-gray-600">
-              End: {event.end?.dateTime || event.end?.date}
-            </p>
-            {event.location && <p className="text-gray-500">Location: {event.location}</p>}
-          </li>
-        ))}
-      </ul>
+    <div style={{ maxWidth: "900px", margin: "20px auto", padding: "20px" }}>
+      <Title level={2} style={{ textAlign: "center", marginBottom: "20px" }}>
+        Fitness Calendar
+      </Title>
+      <Card bordered style={{ padding: "20px" }}>
+        <Calendar
+          fullscreen={false}
+          dateCellRender={dateCellRender}
+          onSelect={onDateSelect}
+        />
+      </Card>
+
+      <Modal
+        title={`Events on ${selectedDate}`}
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+      >
+        {eventsForSelectedDate.length > 0 ? (
+          <List
+            dataSource={eventsForSelectedDate}
+            renderItem={(event) => (
+              <List.Item>
+                <Badge
+                  color="gold"
+                  text={event.event}
+                  style={{ fontSize: "14px" }}
+                />
+              </List.Item>
+            )}
+          />
+        ) : (
+          <Text>No events for this day.</Text>
+        )}
+      </Modal>
     </div>
   );
 };
 
-export default EventCalendar;
+export default FitnessCalendar;
