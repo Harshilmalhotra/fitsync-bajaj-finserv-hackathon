@@ -52,6 +52,7 @@ const Register = () => {
         .insert({
           user_id: user.id, // Store Supabase user ID
           name: name,
+          password: password,
           email: email,
           height: parseInt(height),
           gender: gender,

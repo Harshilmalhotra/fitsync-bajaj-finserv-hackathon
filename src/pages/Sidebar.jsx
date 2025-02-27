@@ -14,7 +14,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className="w-64 bg-amber-50 flex flex-col">
+    <div className="w-64 bg-yellow-400 flex flex-col ">
       <div className="text-xl font-bold mb-8 p-6">Dashboard!</div>
       <nav>
         <ul>
@@ -23,7 +23,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
               <button
                 onClick={() => setActiveTab(item.id)}
                 className={`flex items-center w-full p-2 rounded-md ${activeTab === item.id
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-black text-white'
                     : 'hover:bg-green-100'
                   }`}
               >
