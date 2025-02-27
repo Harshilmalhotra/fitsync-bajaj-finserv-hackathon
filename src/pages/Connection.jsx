@@ -4,7 +4,18 @@ import { supabase } from "./supabase"; // Ensure supabase client is properly con
 export default function Connection() {
     const [searchQuery, setSearchQuery] = useState("");
     const [users, setUsers] = useState([]);
-    const [connections, setConnections] = useState([]);
+    const [connections, setConnections] = useState([
+        {
+            id: 1,
+            users: { name: "test2", email: "test2@gmail.com" },
+            status: "accepted",
+        },
+        {
+            id: 2,
+            users: { name: "arya", email: "ak@gm    ail.com" },
+            status: "accepted",
+        },
+    ]); // Add some fake connections
     const [pendingRequests, setPendingRequests] = useState([]);
     const [userId, setUserId] = useState(null);
 

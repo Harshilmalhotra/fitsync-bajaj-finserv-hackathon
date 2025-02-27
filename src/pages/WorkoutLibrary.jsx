@@ -43,37 +43,43 @@ const WorkoutLibrary = () => {
             title: "Neck Retraction",
             target: "Forward Head Posture",
             duration: "5 min",
-            difficulty: "Beginner"
+            difficulty: "Beginner",
+            image: "https://thumb.ac-illust.com/3f/3f56dff4c44e673cce6c937b2cc1d4c1_t.jpeg"
           },
           {
             title: "Wall Angels",
             target: "Rounded Shoulders",
             duration: "8 min",
-            difficulty: "Intermediate"
+            difficulty: "Intermediate",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaGqnfeFXnDJ2ujtQ9KIMUDACvtE37aZzqzw&s"
           },
           {
             title: "Scapular Retractions",
             target: "Shoulder Alignment",
             duration: "6 min",
-            difficulty: "Beginner"
+            difficulty: "Beginner",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEDir-y6nqG-ZYVBmc_aH7oDsCjuDy_IItiQ&s"
           },
           {
             title: "Thoracic Extensions",
             target: "Upper Back Mobility",
             duration: "10 min",
-            difficulty: "Intermediate"
+            difficulty: "Intermediate",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn7IyRGxbri8Gq7C9_IASoy67LiHsucUzXyg&s"
           },
           {
             title: "Hip Flexor Stretches",
             target: "Anterior Pelvic Tilt",
             duration: "12 min",
-            difficulty: "Beginner"
+            difficulty: "Beginner",
+            image: "https://i.ytimg.com/vi/cJSve88Yp4M/maxresdefault.jpg"
           },
           {
             title: "Core Stabilization",
             target: "Lower Back Support",
             duration: "15 min",
-            difficulty: "Advanced"
+            difficulty: "Advanced",
+            image: "https://cdn.evolve-mma.com/wp-content/uploads/2021/12/Rich-Franklin-planks.jpg"
           }
         ].map((workout, index) => (
           <WorkoutCard key={index} {...workout} />

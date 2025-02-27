@@ -37,8 +37,8 @@ const StatCard = ({
 
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#" /> {/* Blue */}
-            <stop offset="100%" stopColor="#" /> {/* Darker Blue */}
+            <stop offset="0%" stopColor="#00FF00" /> {/* Blue */}
+            <stop offset="100%" stopColor="#00FF00" /> {/* Darker Blue */}
           </linearGradient>
         </defs>
       </svg>
