@@ -31,7 +31,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black">
+    <div className="flex justify-center items-center min-h-screen bg-black" 
+    style={{
+      backgroundImage: "https://i.pinimg.com/736x/12/b1/80/12b180405d2932a3cf9d452888d61a87.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center"
+    }}>
       <div className="w-full max-w-md rounded-lg shadow-md p-6 flex flex-col items-center bg-yellow-400">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         {error && <div className="bg-red-100 text-red-600 p-2 rounded mb-4">{error}</div>}

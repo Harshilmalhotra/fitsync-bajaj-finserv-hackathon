@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import "@tensorflow/tfjs-backend-webgl";
 import * as mpPose from "@mediapipe/pose";
+import {supabase} from './supabase';
 
 function App() {
     const videoRef = useRef(null);
@@ -13,14 +14,15 @@ function App() {
     const [toeTouchCount, setToeTouchCount] = useState(0);
     const [curlCount, setCurlCount] = useState(0); // New state for curl counter
     const [exerciseStatus, setExerciseStatus] = useState("Ready");
+    const [userId,setUserId] = useState("")
 
     let lastSquatPos = "up", lastPushupPos = "up", lastJumpingJackPos = "closed";
     let lastToeTouchPos = "up";
-    let curlStage = null; // New variable for curl stage tracking
+    let curlStage = null; 
 
     let squatCooldown = false, pushupCooldown = false, jumpingJackCooldown = false;
     let toeTouchCooldown = false;
-    let curlCooldown = false; // New cooldown for curl counter
+    let curlCooldown = false;
 
     useEffect(() => {
         async function initialize() {
@@ -31,6 +33,61 @@ function App() {
 
         initialize();
     }, []);
+
+    useEffect(()=> {
+            const pushData = async()=>{
+                try {
+                    const { data: currentData, error: fetchError } = await supabase
+                      .from('registered_trackies')
+                      .select('total_squats, pushups, jumping_jacks, toe_touch')
+                      .eq('user_id', userId)
+                      .single();
+                
+                    if (fetchError) {
+                      console.error('Error fetching current data:', fetchError);
+                      return;
+                    }
+                
+                    const updatedCounts = {
+                      total_squats: (currentData.total_squats || 0) + (squatCount || 0),
+                      pushups: (currentData.pushups || 0) + (pushupCount || 0),
+                      jumping_jacks: (currentData.jumping_jacks || 0) + (jumpingJackCount || 0),
+                      toe_touch: (currentData.toe_touch || 0) + (toeTouchCount || 0),
+                    };
+                    console.log(updatedCounts)
+                
+                    const { error: updateError } = await supabase
+                      .from('registered_trackies')
+                      .update(updatedCounts)
+                      .eq('user_id', userId);
+                
+                    if (updateError) {
+                      console.error('Error updating data:', updateError);
+                      return;
+                    }
+                
+                    console.log('Exercise counts updated successfully:', updatedCounts);
+                  } catch (error) {
+                    console.error('Unexpected error:', error.message);
+                  }
+            }
+            pushData();
+        },[squatCount,pushupCount,jumpingJackCount,toeTouchCount])
+
+    const fetchUsername = async () => {
+        try {
+          const { data: userData, error: userError } = await supabase.auth.getUser();
+          if (userError || !userData?.user) return;
+    
+          setUserId(userData.user.id);
+        //   console.log(userId)
+
+        } catch (err) {
+          console.error('Unexpected error:', err);
+        }
+      };
+    fetchUsername();
+
 
     async function setupCamera() {
         try {
