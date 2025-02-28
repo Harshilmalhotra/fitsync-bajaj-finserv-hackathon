@@ -16,72 +16,72 @@ const Challenges = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [userName, setUserName] = useState('');
 
-  const fetchUsername = async () => {
-    try {
-      const { data: userData, error: userError } = await supabase.auth.getUser();
-      if (userError || !userData?.user) return;
+  // const fetchUsername = async () => {
+  //   try {
+  //     const { data: userData, error: userError } = await supabase.auth.getUser();
+  //     if (userError || !userData?.user) return;
 
-      const userId = userData.user.id;
+  //     const userId = userData.user.id;
 
-      const { data: userDetails, error: fetchError } = await supabase
-        .from('registered_trackies')
-        .select('name')
-        .eq('user_id', userId)
-        .single();
+  //     const { data: userDetails, error: fetchError } = await supabase
+  //       .from('registered_trackies')
+  //       .select('name')
+  //       .eq('user_id', userId)
+  //       .single();
 
-      if (fetchError) {
-        console.error('Error fetching user name:', fetchError.message);
-        return;
-      }
+  //     if (fetchError) {
+  //       console.error('Error fetching user name:', fetchError.message);
+  //       return;
+  //     }
 
-      setUserName(userDetails?.name || 'User');
-    } catch (err) {
-      console.error('Unexpected error:', err);
-    }
-  };
+  //     setUserName(userDetails?.name || 'User');
+  //   } catch (err) {
+  //     console.error('Unexpected error:', err);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchUsername();
-  }, []);
+  // useEffect(() => {
+  //   fetchUsername();
+  // }, []);
 
-  useEffect(() => {
-    const fetchLeaderboardData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('registered_trackies')
-          .select('name, squats, pushup, jumpingjacks');
+  // useEffect(() => {
+  //   const fetchLeaderboardData = async () => {
+  //     try {
+  //       const { data, error } = await supabase
+  //         .from('registered_trackies')
+  //         .select('name, squats, pushup, jumpingjacks');
 
-        if (error) throw error;
+  //       if (error) throw error;
 
-        const leaderboard = data.map((user) => ({
-          name: user.name,
-          squats: user.squats,
-          pushups: user.pushup,
-          jumpingJacks: user.jumpingjacks,
-          points: calculatePoints(user.squats, user.pushup, user.jumpingjacks),
-          isUser: user.name === userName,
-        }));
+  //       const leaderboard = data.map((user) => ({
+  //         name: user.name,
+  //         squats: user.squats,
+  //         pushups: user.pushup,
+  //         jumpingJacks: user.jumpingjacks,
+  //         points: calculatePoints(user.squats, user.pushup, user.jumpingjacks),
+  //         isUser: user.name === userName,
+  //       }));
 
-        leaderboard.sort((a, b) => b.points - a.points);
-        leaderboard.forEach((user, index) => {
-          user.rank = index + 1;
-        });
+  //       leaderboard.sort((a, b) => b.points - a.points);
+  //       leaderboard.forEach((user, index) => {
+  //         user.rank = index + 1;
+  //       });
 
-        setLeaderboardData(leaderboard);
-      } catch (error) {
-        console.error('Error fetching leaderboard data:', error);
-      }
-    };
+  //       setLeaderboardData(leaderboard);
+  //     } catch (error) {
+  //       console.error('Error fetching leaderboard data:', error);
+  //     }
+  //   };
 
-    fetchLeaderboardData();
-  }, [userName]);
+  //   fetchLeaderboardData();
+  // }, [userName]);
 
-  const getTrophyColor = (rank) => {
-    if (rank === 1) return 'text-yellow-500';
-    if (rank === 2) return 'text-gray-400';
-    if (rank === 3) return 'text-amber-700';
-    return 'text-gray-500';
-  };
+  // const getTrophyColor = (rank) => {
+  //   if (rank === 1) return 'text-yellow-500';
+  //   if (rank === 2) return 'text-gray-400';
+  //   if (rank === 3) return 'text-amber-700';
+  //   return 'text-gray-500';
+  // };
 
   return (
     <div className="space-y-6">

@@ -1,11 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { supabase } from './supabase';
+
+
+
 
 const Analytics = () => {
+
+  const [userId, setUserId] = useState("");
+
+  const fetchUsername = async () => {
+    try {
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError || !userData?.user) return;
+
+      setUserId(userData.user.id);
+      //   console.log(userId)
+
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    }
+  };
+  fetchUsername();
+
+
+  const [stats, setStats] = useState({});
+
+  const fetchData = async () => {
+    try {
+      const { data: currentData, error: fetchError } = await supabase
+        .from('registered_trackies')
+        .select('total_squats, pushups, jumping_jacks, toe_touch, curls')
+        .eq('user_id', userId)
+        .single();
+        console.log(currentData)
+      setStats(currentData);
+    } catch (error) {
+      console.error('Unexpected error:', error.message);
+    }
+  }
+  fetchData();
+
+  const data = [
+    { name: "Squats", value: (stats.total_squats) },
+    { name: "Pushups", value: (stats.pushups) },
+    { name: "Jumping Jacks", value: (stats.jumping_jacks) },
+    { name: "Toe Touch", value: (stats.toe_touch) },
+    { name: "Curls", value: (stats.curls) },
+  ];
+
+  // console.log(data)
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA78FF"];
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Analytics</h2>
 
-      <div className="flex justify-end space-x-2">
+      {/* <div className="flex justify-end space-x-2">
         {['Week', 'Month', '3 Months', 'Year'].map((range) => (
           <button
             key={range}
@@ -17,7 +69,7 @@ const Analytics = () => {
             {range}
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -29,8 +81,30 @@ const Analytics = () => {
 
         <div className="bg-white p-6 rounded-lg shadow-sm">
           <h3 className="text-lg font-semibold mb-4">Activity Distribution</h3>
-          <div className="h-60 w-full bg-gray-100 rounded flex items-center justify-center">
-            <p className="text-gray-500">Chart placeholder: Activity types pie chart</p>
+          <div className="bg-white p-6 rounded-lg shadow-sm">
+            <h3 className="text-lg font-semibold mb-4">Activity Distribution</h3>
+            <div className="h-60 w-full bg-gray-100 rounded flex items-center justify-center">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={data}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    fill="#8884d8"
+                    label
+                  >
+                    {data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>
