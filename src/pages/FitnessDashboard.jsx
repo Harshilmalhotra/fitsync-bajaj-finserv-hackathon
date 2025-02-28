@@ -16,6 +16,7 @@ import Profile from './Profile';
 import Leaderboard from './Leaderboard';
 
 import Connection from './Connection';
+import Practice from './Practice';
 
 
 const FitnessDashboard = () => {
@@ -31,6 +32,7 @@ const FitnessDashboard = () => {
           <div className="mt-6">
             {activeTab === 'home' && <HomeContent />}
             {activeTab === 'pose' && <PoseCorrection />}
+            {activeTab === 'practice' && <Practice />}
             {activeTab === 'calendar' && <EventCalendar />}
             {activeTab === 'inbox' && <Inbox />}
             {activeTab === 'connections' && <Connection />}
