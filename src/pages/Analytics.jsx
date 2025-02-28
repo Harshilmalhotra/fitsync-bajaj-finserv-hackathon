@@ -24,8 +24,9 @@ const Analytics = () => {
   fetchUsername();
 
 
-  const [stats, setStats] = useState({});
+  const [stats, setStats] = useState();
 
+  let data = []
   const fetchData = async () => {
     try {
       const { data: currentData, error: fetchError } = await supabase
@@ -33,21 +34,30 @@ const Analytics = () => {
         .select('total_squats, pushups, jumping_jacks, toe_touch, curls')
         .eq('user_id', userId)
         .single();
-        console.log(currentData)
-      setStats(currentData);
+
+      data = [
+        { name: "Squats", value: currentData.total_squats },
+        { name: "Pushups", value: currentData.pushups },
+        { name: "Jumping Jacks", value: currentData.jumping_jacks },
+        { name: "Toe Touch", value: currentData.toe_touch },
+        { name: "Curls", value: currentData.curls },
+      ]
+
+      setStats(data);
+      // console.log(stats)
     } catch (error) {
       console.error('Unexpected error:', error.message);
     }
   }
   fetchData();
 
-  const data = [
-    { name: "Squats", value: (stats.total_squats) },
-    { name: "Pushups", value: (stats.pushups) },
-    { name: "Jumping Jacks", value: (stats.jumping_jacks) },
-    { name: "Toe Touch", value: (stats.toe_touch) },
-    { name: "Curls", value: (stats.curls) },
-  ];
+  // const data = [
+  //   { name: "Squats", value: stats.total_squats },
+  //   { name: "Pushups", value: (stats.pushups) },
+  //   { name: "Jumping Jacks", value: (stats.jumping_jacks) },
+  //   { name: "Toe Touch", value: (stats.toe_touch) },
+  //   { name: "Curls", value: (stats.curls) },
+  // ];
 
   // console.log(data)
 
@@ -87,7 +97,7 @@ const Analytics = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
-                    data={data}
+                    data={stats}
                     dataKey="value"
                     nameKey="name"
                     cx="50%"
@@ -96,7 +106,7 @@ const Analytics = () => {
                     fill="#8884d8"
                     label
                   >
-                    {data.map((entry, index) => (
+                    {stats?.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
@@ -104,6 +114,7 @@ const Analytics = () => {
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
+
             </div>
           </div>
         </div>
