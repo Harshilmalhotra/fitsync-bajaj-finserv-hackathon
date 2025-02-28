@@ -47,16 +47,16 @@ const Leaderboard = () => {
       try {
         const { data, error } = await supabase
           .from('registered_trackies')
-          .select('name, squats, pushup, jumpingjacks');
+          .select('name, total_squats, pushups, jumping_jacks');
 
         if (error) throw error;
 
         const leaderboard = data.map((user) => ({
           name: user.name,
-          squats: user.squats,
-          pushups: user.pushup,
-          jumpingJacks: user.jumpingjacks,
-          points: calculatePoints(user.squats, user.pushup, user.jumpingjacks),
+          squats: user.total_squats,
+          pushups: user.pushups,
+          jumpingJacks: user.jumping_jacks,
+          points: calculatePoints(user.total_squats, user.pushups, user.jumping_jacks),
           isUser: user.name === userName,
         }));
 
@@ -133,7 +133,7 @@ const Leaderboard = () => {
           {leaderboardData.map((user) => (
             <div
               key={user.rank}
-              className={`relative flex items-center p-3 rounded-md ${user.isUser ? 'bg-blue-50' : ''}`}
+              className={`relative flex items-center p-3 rounded-md ${user.isUser ? 'bg-black' : ''}`}
             >
               <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
                 {user.rank}
