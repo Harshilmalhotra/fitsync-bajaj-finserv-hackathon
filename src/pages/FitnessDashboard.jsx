@@ -17,7 +17,7 @@ import Leaderboard from './Leaderboard';
 
 import Connection from './Connection';
 import Practice from './Practice';
-
+import Yoga from './Yoga';
 
 const FitnessDashboard = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -42,6 +42,7 @@ const FitnessDashboard = () => {
             {activeTab === 'profile' && <Profile />}
             {activeTab === 'leaderboard' && <Leaderboard />}
             {activeTab === 'community' && <Community />}
+            {activeTab === 'yoga' && <Yoga />}
           </div>
         </div>
       </div>
