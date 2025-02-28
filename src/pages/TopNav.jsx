@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Bell, User, Flame } from "lucide-react";
 import { supabase } from "./supabase"; // Ensure correct import of Supabase client
+import { useNavigate } from "react-router-dom"; // Ensure correct import of useNavigate
 
 const TopNav = () => {
   const [userName, setUserName] = useState("");
   const [streak, setStreak] = useState(0);
   const [showProfilePopup, setShowProfilePopup] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -39,7 +41,7 @@ const TopNav = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.reload();
+    navigate("/login"); // Redirect to sign-in route
   };
 
   return (
