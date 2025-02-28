@@ -19,7 +19,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
   return (
     <div className="w-64 bg-primary flex flex-col text-textPrimary">
-      <div className="text-xl font-bold mb-8 p-6">Dashboard!</div>
+      <div className="text-3xl font-bold mb-8 p-6">FITSYNC</div>
       <nav>
         <ul>
           {menuItems.map((item) => (

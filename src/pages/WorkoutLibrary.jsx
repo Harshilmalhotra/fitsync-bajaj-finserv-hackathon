@@ -32,7 +32,7 @@ const WorkoutLibrary = () => {
       difficulty: "Beginner",
       category: "Neck",
       condition: "Neck Strain",
-      image: "https://www.verywellhealth.com/thmb/kI7-Z7-dWXD02PPdFLdCgn5H6Dw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Depositphotos_433654902_S-fd660461ceab486f97c0a69452d3c7a7.jpg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtY_IGjIgf97fUe2LkAmK13PtQj_7uv_--9A&s",
       youtubeLink: "https://youtu.be/wQylqaCl8Zo?si=k6tDnPTF0zFGrzuw"
     },
     {
@@ -42,7 +42,7 @@ const WorkoutLibrary = () => {
       difficulty: "Beginner",
       category: "Neck",
       condition: "Stiff Neck",
-      image: "https://thumbs.dreamstime.com/b/physical-therapy-exercises-to-relieve-neck-pain-man-doing-set-isolated-white-background-home-vector-illustration-99918444.jpg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhU4yez6QCY2lFrqccLnovb48X3AdzadFdGQ&s",
       youtubeLink: "https://youtu.be/XulnGEGHgQg?si=8qw4d9RNGUkPL1G-"
     },
     {
@@ -62,7 +62,7 @@ const WorkoutLibrary = () => {
       difficulty: "Intermediate",
       category: "Shoulders",
       condition: "Rotator Cuff Weakness",
-      image: "https://www.healthpages.org/wp-content/uploads/2016/11/external-rotation-exercise-rotator-cuff-2-resized.jpg",
+      image: "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/blogs/5999/images/5ca018-c830-02bd-1530-eb034b3567c8_105.webp",
       youtubeLink: "https://youtu.be/FeJrRROaS7I?si=3pJYENMh5kNzjZNf"
     },
     {
@@ -72,7 +72,7 @@ const WorkoutLibrary = () => {
       difficulty: "Beginner",
       category: "Shoulders",
       condition: "Winged Scapula",
-      image: "https://cdn.shopify.com/s/files/1/1728/2157/files/Retraction.jpg?v=1552916920",
+      image: "http://media.post.rvohealth.io/wp-content/uploads/2020/04/A-fit-mixed-race-man-with-dreadlocks-doing-exercise-at-home-732x549-thumbnail-1.jpg ",
       youtubeLink: "https://youtu.be/FgskXsTGQAE?si=4EKK7-XZ1a3f78EF"
     },
     {
