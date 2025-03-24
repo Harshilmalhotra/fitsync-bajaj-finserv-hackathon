@@ -14,16 +14,15 @@ This project is a **React + Vite** based fitness webpage that utilizes **pose de
 ## Tech Stack
 - **Frontend:** React, Vite, Tailwind CSS
 - **AI & ML:** MediaPipe, TensorFlow.js
-- **State Management:** Redux (if applicable)
 - **Build Tools:** Vite
-- **Hosting:** Vercel / Firebase (optional)
-
+- **Hosting:** Vercel
+- **Database:** Supabase
 ## Installation
 To set up the project locally, follow these steps:
 
 1. **Clone the repository:**
    ```sh
-   git clone [https://github.com/your-username/fitness-pose-detection](https://github.com/Harshilmalhotra/fitsync-bajaj-finserv-hackathon).git
+   git clone https://github.com/Harshilmalhotra/fitsync-bajaj-finserv-hackathon.git
    cd fitness-pose-detection
    ```
 2. **Install dependencies:**
