@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import  video from '../assets/4108624-uhd_3840_2160_25fps.mp4'
 
 const FitnessLanding = () => {
@@ -14,6 +15,11 @@ const FitnessLanding = () => {
   };
 
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPopup(false), 8000);
+    return () => clearTimeout(timer);
+  }, []);
   const handleSignup = () => {
     navigate("/register");
   };
@@ -28,6 +34,38 @@ const FitnessLanding = () => {
         color: colors.textPrimary,
       }}
     >
+        {showPopup && (
+          <div style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}>
+            <div style={{
+              background: '#1e293b',
+              color: '#e2e8f0',
+              padding: '2rem',
+              borderRadius: '0.75rem',
+              maxWidth: '90%',
+              textAlign: 'center',
+            }}>
+              <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Maintenance Notice</h2>
+              <p>Signup and authentication are temporarily disabled for maintenance purposes. They will be re‑enabled soon. Sorry for the inconvenience.</p>
+              <button onClick={() => { setShowPopup(false); navigate('/dashboard'); }} style={{
+                marginTop: '1rem',
+                background: '#3b82f6',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                border: 'none',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+              }}>Close</button>
+            </div>
+          </div>
+        )}
       {/* Background Video */}
       <div
         style={{
@@ -409,7 +447,7 @@ const FitnessLanding = () => {
             fontSize: "0.875rem",
           }}
         >
-          <p>&copy; 2025 FitnessPro. All rights reserved.</p>
+          <p>&copy; 2025 FitnessSync by Harshil Malhotra. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -1,11 +1,6 @@
-import { Navigate } from "react-router-dom";
-import { supabase } from "./supabase";
-
+// Authentication temporarily disabled – direct access
 const ProtectedRoute = ({ children }) => {
-  const session = supabase.auth.getSession();
-  if (!session.data?.session) {
-    return <Navigate to="/login" />;
-  }
+  // No auth checks; render children directly
   return children;
 };
 
