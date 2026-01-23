@@ -165,6 +165,13 @@ const Login = () => {
               Create account
             </a>
           </p>
+          <button
+              onClick={() => navigate("/dashboard")}
+              className="mt-4 font-medium hover:underline transition-colors duration-300 text-sm opacity-70 hover:opacity-100"
+              style={{ color: colors.textSecondary }}
+            >
+              Skip to Dashboard (Temporary)
+          </button>
         </div>
         
         {/* Glass effect cards in corners for visual interest */}
